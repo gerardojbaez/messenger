@@ -1,6 +1,6 @@
 # Messenger
 
-Messenger is a Laravel 5.2 package that provides web developers an easy way to integrate a chat/message system on websites.
+Chat/Message system for Laravel.
 
 With Messenger:
 
