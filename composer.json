@@ -1,0 +1,22 @@
+{
+    "name": "gerardojbaez/messenger",
+    "description": "Messenger functionality for Laravel 5.2.",
+    "keywords": ["laravel", "messenger", "messages"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gerardo Báez",
+            "email": "gerardojbaez@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gerardojbaez\\Messenger\\": "src/Messenger/"
+        }
+    }
+}
