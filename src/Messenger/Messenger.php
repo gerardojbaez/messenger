@@ -150,7 +150,7 @@ class Messenger
 
 		return DB::transaction(function() use($from, $to)
 		{
-			$thread = App::make(MessageThreadInterface::class)->save();
+			$thread = App::make(MessageThreadInterface::class)->create();
 
 			// Build participants array
 			$participants = [
