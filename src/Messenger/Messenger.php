@@ -4,6 +4,7 @@ namespace Gerardojbaez\Messenger;
 
 use DB;
 use App;
+use Gerardojbaez\Messenger\Exceptions\MessengerException;
 use Gerardojbaez\Messenger\Contracts\MessageableInterface;
 use Gerardojbaez\Messenger\Contracts\MessageThreadInterface;
 use Gerardojbaez\Messenger\Contracts\MessageThreadParticipantInterface;
