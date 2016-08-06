@@ -164,7 +164,7 @@ class Messenger
 			}
 			elseif ($to instanceof MessageableInterface)
 			{
-				$participant[] = ['thread_id' => $thread->id, 'user_id' => $to->id];
+				$participants[] = ['thread_id' => $thread->id, 'user_id' => $to->id];
 			}
 
 			$thread->participants()->insert($participants);
