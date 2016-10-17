@@ -130,14 +130,14 @@ class Messenger
 
         // If recipient is a user, let's find a
         // thread between him/her and the sender.
-        if ($this->to instanceof MessageableInterface) {
+        elseif ($this->to instanceof MessageableInterface) {
             $thread = App::make(MessageThreadInterface::class)->between($this->from->id, $this->to->id)->first();
         }
 
         // If recipient is an array, someone is trying
         // to send the message to multiple users...
         // Let's try to find a thread between them.
-        if (is_array($this->to)) {
+        elseif (is_array($this->to)) {
             $thread = App::make(MessageThreadInterface::class)->between(array_merge([$this->from->id], $this->to))->first();
         }
 
