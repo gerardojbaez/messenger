@@ -35,9 +35,11 @@ class MessengerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    	$this->app->singleton('messenger', function($app) {
-    		return new Messenger;
-    	});
+        $this->mergeConfigFrom(__DIR__.'/../config/messenger.php', 'messenger');
+
+        $this->app->singleton('messenger', function($app) {
+            return new Messenger;
+        });
 
         $this->app->bind(MessageInterface::class, config('messenger.models.message'));
         $this->app->bind(MessageThreadInterface::class, config('messenger.models.thread'));
