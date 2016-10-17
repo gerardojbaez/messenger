@@ -177,7 +177,8 @@ class MessageThread extends Model implements MessageThreadInterface
         }
 
         return $query->whereHas('participants', function ($query) use ($participants) {
-            $query->whereIn('user_id', $participants)
+            $query->select('thread_id', 'thread_id')
+                ->whereIn('user_id', $participants)
                 ->groupBy('thread_id')
                 ->havingRaw('COUNT(thread_id) = '.count($participants));
         });
