@@ -16,10 +16,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        // $this->beforeApplicationDestroyed(function() {
-        // 	$this->artisan('migrate:rollback');
-        // });
-
         $this->migrate();
         $this->createUsers();
     }
@@ -100,22 +96,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'Messenger' => 'Gerardojbaez\Messenger\Messenger',
         ];
     }
-
-    /*
-     * Register the Eloquent factory instance in the container.
-     *
-     * @return void
-     */
-    // protected function registerEloquentFactory($app)
-    // {
-    //     $app->singleton(FakerGenerator::class, function () {
-    //         return FakerFactory::create();
-    //     });
-
-    //     $app->singleton(EloquentFactory::class, function ($app) {
-    //         $faker = $app->make(FakerGenerator::class);
-
-    //         return EloquentFactory::construct($faker, __DIR__.'/../src/database/factories');
-    //     });
-    // }
 }
