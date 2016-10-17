@@ -1,6 +1,6 @@
 # Messenger
 
-Chat/Message system for Laravel.
+Chat/Message system for Laravel 5.x.
 
 With Messenger:
 
@@ -48,8 +48,8 @@ Messenger::from($user)->to($thread)->message('I\'ll be there');
 
 ### Requirements
 
-- Laravel 5.2 (not tested in other versions)
-- PHP >=5.5 (not tested in other versions)
+- Laravel 5.x
+- PHP >=5.5
 
 ### Composer
 
@@ -58,14 +58,14 @@ Pull this package through Composer (file `composer.json`)
 ```js
 {
     "require": {
-        "gerardojbaez/messenger": "0.*"
+        "gerardojbaez/messenger": "~1.0"
     }
 }
 ```
 
 Then run
 
-	$ composer update
+	$ composer install
 
 ### Service Provider and Facade
 
