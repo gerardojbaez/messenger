@@ -169,7 +169,9 @@ class Messenger
                 ['thread_id' => $thread->id, 'user_id' => $from->id],
             ];
 
-            if (is_array($to)) {
+            if (is_numeric($to)) {
+                $participants[] = ['thread_id' => $thread->id, 'user_id' => $to];
+            } elseif (is_array($to)) {
                 foreach ($to as $id) {
                     $participants[] = ['thread_id' => $thread->id, 'user_id' => $id];
                 }
