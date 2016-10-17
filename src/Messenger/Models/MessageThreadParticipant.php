@@ -16,8 +16,8 @@ class MessageThreadParticipant extends Model implements MessageThreadParticipant
      * @var array
      */
     protected $fillable = [
-    	'thread_id',
-    	'user_id'
+        'thread_id',
+        'user_id',
     ];
 
     /**
@@ -41,7 +41,7 @@ class MessageThreadParticipant extends Model implements MessageThreadParticipant
      */
     public function thread()
     {
-    	return $this->belongsTo(config('messenger.models.thread'));
+        return $this->belongsTo(config('messenger.models.thread'));
     }
 
     /**
@@ -51,6 +51,6 @@ class MessageThreadParticipant extends Model implements MessageThreadParticipant
      */
     public function user()
     {
-    	return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
     }
 }

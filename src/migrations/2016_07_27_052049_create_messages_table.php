@@ -7,13 +7,10 @@ class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('messages', function(Blueprint $table)
-        {
+        Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('thread_id')->unsigned();
             $table->integer('sender_id')->unsigned();
@@ -26,8 +23,6 @@ class CreateMessagesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

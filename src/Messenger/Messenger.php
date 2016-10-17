@@ -7,171 +7,179 @@ use App;
 use Gerardojbaez\Messenger\Exceptions\MessengerException;
 use Gerardojbaez\Messenger\Contracts\MessageableInterface;
 use Gerardojbaez\Messenger\Contracts\MessageThreadInterface;
-use Gerardojbaez\Messenger\Contracts\MessageThreadParticipantInterface;
 
 class Messenger
 {
-	/**
-	 * Message sender.
-	 *
-	 * @var \App\Models\User
-	 */
-	protected $from;
+    /**
+     * Message sender.
+     *
+     * @var \App\Models\User
+     */
+    protected $from;
 
-	/**
-	 * Message recipients.
-	 *
-	 * Can be an instance of MessageThread, User
-	 * or an array with user ids.
- 	 *
-	 * @var mixed
-	 */
-	protected $to;
+    /**
+     * Message recipients.
+     *
+     * Can be an instance of MessageThread, User
+     * or an array with user ids.
+     *
+     * @var mixed
+     */
+    protected $to;
 
-	/**
-	 * Message.
-	 *
-	 * @var string
-	 */
-	protected $message;
+    /**
+     * Message.
+     *
+     * @var string
+     */
+    protected $message;
 
-	/**
-	 * Set Message.
-	 *
-	 * @param string
-	 * @return $this
-	 */
-	public function message($message)
-	{
-		$this->message = $message;
+    /**
+     * Set Message.
+     *
+     * @param string
+     *
+     * @return $this
+     */
+    public function message($message)
+    {
+        $this->message = $message;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Message sender.
-	 *
-	 * @param \App\Models\User
-	 * @return $this
-	 */
-	public function from(MessageableInterface $from)
-	{
-		$this->from = $from;
+    /**
+     * Message sender.
+     *
+     * @param \App\Models\User
+     *
+     * @return $this
+     */
+    public function from(MessageableInterface $from)
+    {
+        $this->from = $from;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Message recipients.
-	 *
-	 * @param mixed
-	 * @return $this
-	 */
-	public function to($to)
-	{
-		$this->to = $to;
+    /**
+     * Message recipients.
+     *
+     * @param mixed
+     *
+     * @return $this
+     */
+    public function to($to)
+    {
+        $this->to = $to;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Send message.
-	 *
-	 * @return bool
-	 */
-	public function send()
-	{
-		if (!$this->from)
-			throw new MessengerException('Sender not provided.');
+    /**
+     * Send message.
+     *
+     * @return bool
+     */
+    public function send()
+    {
+        if (!$this->from) {
+            throw new MessengerException('Sender not provided.');
+        }
 
-		if (!$this->to)
-			throw new MessengerException('Receiver not provided.');
+        if (!$this->to) {
+            throw new MessengerException('Receiver not provided.');
+        }
 
-		if (!$this->message)
-			throw new MessengerException('Message not provided');
+        if (!$this->message) {
+            throw new MessengerException('Message not provided');
+        }
 
-		$from = $this->from;
-		$thread = $this->getThread();
-		$message = $this->message;
-		$to = $this->to;
+        $from = $this->from;
+        $thread = $this->getThread();
+        $message = $this->message;
+        $to = $this->to;
 
-		$message = $thread->messages()->create([
-			'body' => $message,
-			'sender_id' => $from->id
-		]);
+        $message = $thread->messages()->create([
+            'body' => $message,
+            'sender_id' => $from->id,
+        ]);
 
-		if ($message->id)
-			return true;
+        if ($message->id) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Try to find a thread, if no thread is
-	 * found, create one.
-	 *
-	 * @return \Gerardojbaez\Messenger\Models\MessageThread
-	 */
-	protected function getThread()
-	{
-		$thread = null;
+    /**
+     * Try to find a thread, if no thread is
+     * found, create one.
+     *
+     * @return \Gerardojbaez\Messenger\Models\MessageThread
+     */
+    protected function getThread()
+    {
+        $thread = null;
 
-		// If recipient is already a thread
-		// let's use it!
-		if ($this->to instanceof MessageThreadInterface)
-			$thread = $this->to;
+        // If recipient is already a thread
+        // let's use it!
+        if ($this->to instanceof MessageThreadInterface) {
+            $thread = $this->to;
+        }
 
-		// If recipient is a user, let's find a
-		// thread between him/her and the sender.
-		if ($this->to instanceof MessageableInterface)
-			$thread = App::make(MessageThreadInterface::class)->between($this->from->id, $this->to->id)->first();
+        // If recipient is a user, let's find a
+        // thread between him/her and the sender.
+        if ($this->to instanceof MessageableInterface) {
+            $thread = App::make(MessageThreadInterface::class)->between($this->from->id, $this->to->id)->first();
+        }
 
-		// If recipient is an array, someone is trying
-		// to send the message to multiple users...
-		// Let's try to find a thread between them.
-		if (is_array($this->to))
-			$thread = App::make(MessageThreadInterface::class)->between(array_merge([$this->from->id], $this->to))->first();
+        // If recipient is an array, someone is trying
+        // to send the message to multiple users...
+        // Let's try to find a thread between them.
+        if (is_array($this->to)) {
+            $thread = App::make(MessageThreadInterface::class)->between(array_merge([$this->from->id], $this->to))->first();
+        }
 
-		// Return thread if was found...
-		if ($thread) return $thread;
+        // Return thread if was found...
+        if ($thread) {
+            return $thread;
+        }
 
-		return $this->createThread();
-	}
+        return $this->createThread();
+    }
 
-	/**
-	 * Create thread.
-	 *
-	 * @return \App\Models\MessageThread
-	 */
-	protected function createThread()
-	{
-		$from = $this->from;
-		$to = $this->to;
+    /**
+     * Create thread.
+     *
+     * @return \App\Models\MessageThread
+     */
+    protected function createThread()
+    {
+        $from = $this->from;
+        $to = $this->to;
 
-		return DB::transaction(function() use($from, $to)
-		{
-			$thread = App::make(MessageThreadInterface::class);
-			$thread->id = null;
-			$thread->save();
+        return DB::transaction(function () use ($from,$to) {
+            $thread = App::make(MessageThreadInterface::class);
+            $thread->id = null;
+            $thread->save();
 
-			// Build participants array
-			$participants = [
-				['thread_id' => $thread->id, 'user_id' => $from->id]
-			];
+            // Build participants array
+            $participants = [
+                ['thread_id' => $thread->id, 'user_id' => $from->id],
+            ];
 
-			if (is_array($to))
-			{
-				foreach ($to as $id)
-					$participants[] = ['thread_id' => $thread->id, 'user_id' => $id];
-			}
-			elseif ($to instanceof MessageableInterface)
-			{
-				$participants[] = ['thread_id' => $thread->id, 'user_id' => $to->id];
-			}
+            if (is_array($to)) {
+                foreach ($to as $id) {
+                    $participants[] = ['thread_id' => $thread->id, 'user_id' => $id];
+                }
+            } elseif ($to instanceof MessageableInterface) {
+                $participants[] = ['thread_id' => $thread->id, 'user_id' => $to->id];
+            }
 
-			$thread->participants()->insert($participants);
+            $thread->participants()->insert($participants);
 
-			return $thread;
-		});
-	}
+            return $thread;
+        });
+    }
 }

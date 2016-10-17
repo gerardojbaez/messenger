@@ -9,7 +9,7 @@ return [
     */
 
     'threads' => [
-        'title' => '{1}:name|{2}:name y 1 más|[3,Inf]:name y otros :count'
+        'title' => '{1}:name|{2}:name y 1 más|[3,Inf]:name y otros :count',
     ],
 
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gerardojbaez\Messenger\Tests\Models;
+namespace Gerardojbaez\Messenger\tests\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Gerardojbaez\Messenger\Contracts\MessageableInterface;

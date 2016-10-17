@@ -7,13 +7,10 @@ class CreateMessageThreadParticipants extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('message_thread_participants', function(Blueprint $table)
-        {
+        Schema::create('message_thread_participants', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('thread_id')->unsigned();
             $table->integer('user_id')->unsigned();
@@ -28,8 +25,6 @@ class CreateMessageThreadParticipants extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
