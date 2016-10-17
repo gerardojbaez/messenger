@@ -14,9 +14,9 @@ class Message extends Model implements MessageInterface
      */
     protected $fillable = [
         'thread_id',
-    	'sender_id',
-    	'body',
-        'related_listing_id'
+        'sender_id',
+        'body',
+        'related_listing_id',
     ];
 
     /**
@@ -35,16 +35,13 @@ class Message extends Model implements MessageInterface
 
     /**
      * The "booting" method of the model.
-     *
-     * @return void
      */
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
-        	$model->created_at = $model->freshTimestamp();
+        static::creating(function ($model) {
+            $model->created_at = $model->freshTimestamp();
         });
     }
 
@@ -55,7 +52,7 @@ class Message extends Model implements MessageInterface
      */
     public function sender()
     {
-    	return $this->belongsTo(config('auth.providers.users.model'), 'sender_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'sender_id');
     }
 
     /**
@@ -73,6 +70,7 @@ class Message extends Model implements MessageInterface
      *
      * @param $query
      * @param int $sender User ID
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFromSender($query, $sender)

@@ -2,4 +2,6 @@
 
 namespace Gerardojbaez\Messenger\Exceptions;
 
-class MessengerException extends \Exception { }
+class MessengerException extends \Exception
+{
+}
