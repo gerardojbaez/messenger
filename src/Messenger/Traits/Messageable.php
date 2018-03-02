@@ -2,8 +2,6 @@
 
 namespace Gerardojbaez\Messenger\Traits;
 
-use App\Models\Message;
-
 trait Messageable
 {
     /**
@@ -53,27 +51,12 @@ trait Messageable
     {
         $count = 0;
 
-        foreach ($this->threads as $thread) {
-            $count += $thread->messages->filter(function ($msg, $key) use ($thread) {
-
-                // Exclude messages that were sent
-                // by this user.
-                if ($this->id == $msg->sender_id) {
-                    return false;
-                }
-
-                // If last_read is null this means
-                // all messages are unread since
-                // the user hasn't opened the
-                // thread yet.
-                if (is_null($thread->pivot->last_read)) {
-                    return true;
-                }
-
-                // Return new messages only
-                return $msg->created_at > $thread->pivot->last_read;
-            })->count();
-        }
+        $this->threads()->withCount(['messages as unread_messages_count' => function ($query) {
+            $query->where('sender_id', '!=', $this->id)
+                ->whereRaw('created_at > message_thread_participants.last_read');
+        }])->chunk(200, function ($threads) use (&$count) {
+            $count += $threads->sum('unread_messages_count');
+        });
 
         return $count;
     }
