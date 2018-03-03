@@ -69,6 +69,8 @@ Then run
 
 ### Service Provider and Facade
 
+> If you are using laravel 5.5 and later, you can skip the following two steps since this package supports package auto-discovery feature.
+
 Add the package to your application service providers in `config/app.php` file.
 
 ```php
