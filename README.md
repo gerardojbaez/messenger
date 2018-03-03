@@ -1,3 +1,7 @@
+[![Build Status](https://img.shields.io/travis/gerardojbaez/messenger.svg?style=flat-square)](https://travis-ci.org/gerardojbaez/messenger)
+[![Latest Version](https://img.shields.io/github/release/gerardojbaez/messenger.svg?style=flat-square)](https://github.com/gerardojbaez/messenger/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+
 # Messenger
 
 Chat/Message system for Laravel 5.x.
