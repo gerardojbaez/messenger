@@ -12,11 +12,9 @@ With Messenger:
 - Users can participate in multiple conversations.
 - Users can send messages to one or multiple users.
 
-Once setup, sending messages it's as easy as falling off a log:
+## TL;DR
 
 ```php
-<?php
-
 use Messenger;
 
 // Sending a message to one user:
@@ -57,19 +55,7 @@ Messenger::from($user)->to($thread)->message('I\'ll be there');
 
 ### Composer
 
-Pull this package through Composer (file `composer.json`)
-
-```js
-{
-    "require": {
-        "gerardojbaez/messenger": "~1.0"
-    }
-}
-```
-
-Then run
-
-	$ composer install
+	$ composer require gerardojbaez/messenger
 
 ### Service Provider and Facade
 
@@ -241,7 +227,7 @@ public function index()
 
 Preview:
 
-![Preview of all user threads](https://i.imgsafe.org/3980764f5b.png)
+![Preview of all user threads](http://static.gerardobaez.com/images/messenger-threads-preview.png)
 
 ### Using Models
 
