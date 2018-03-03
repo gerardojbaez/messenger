@@ -25,11 +25,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function migrate()
     {
+        $this->app->afterResolving('migrator', function ($migrator) {
+            $migrator->path(realpath(__DIR__.'/../src/migrations'));
+        });
+
         // Run package migrations
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-            '--realpath' => realpath(__DIR__.'/../src/migrations'),
-        ]);
+        $this->artisan('migrate');
 
         // Create user's table
         \Schema::create('users', function ($table) {
