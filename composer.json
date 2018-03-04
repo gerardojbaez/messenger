@@ -23,5 +23,15 @@
             "Gerardojbaez\\Messenger\\Tests\\": "tests",
             "Gerardojbaez\\Messenger\\": "src/Messenger/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gerardojbaez\\Messenger\\MessengerServiceProvider"
+            ],
+            "aliases": {
+                "Messenger": "Gerardojbaez\\Messenger\\Facades\\Messenger"
+            }
+        }
     }
 }

@@ -79,7 +79,7 @@ class Messenger
     /**
      * Send message.
      *
-     * @return bool
+     * @return \Gerardojbaez\Messenger\Contracts\MessageInterface
      */
     public function send()
     {
@@ -98,18 +98,11 @@ class Messenger
         $from = $this->from;
         $thread = $this->getThread();
         $message = $this->message;
-        $to = $this->to;
 
-        $message = $thread->messages()->create([
+        return $thread->messages()->create([
             'body' => $message,
             'sender_id' => $from->id,
         ]);
-
-        if ($message->id) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
